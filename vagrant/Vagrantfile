@@ -1,0 +1,14 @@
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.network "forwarded_port", guest: 8088, host: 8088
+
+  config.vm.synced_folder "../", "/pysaml2-sp"
+
+  config.vm.provision "docker" do |docker|
+    docker.build_image "/pysaml2-sp",
+        args: "-t pysaml2-sp"
+    docker.run "pysaml2-sp",
+        args: "-p 8088:8088 -v /pysaml2-sp/env:/mnt/config -e DATA_DIR=/mnt/config"
+  end
+end
