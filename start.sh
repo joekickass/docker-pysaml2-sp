@@ -7,4 +7,4 @@ export PYTHONPATH="${DATA_DIR}"
 make_metadata.py sp_conf.py > sp.xml
 
 # start the Service Provider
-exec /tmp/src/pysaml2/example/sp-wsgi/sp.py sp_conf
+exec /tmp/src/pysaml2/example/sp-wsgi/sp.py sp_conf $*
