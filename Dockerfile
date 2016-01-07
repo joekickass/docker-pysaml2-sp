@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-dev \
     python-pip \
     libsasl2-dev \
-    libldap2-dev \
     libssl-dev \
     libffi-dev \
     xmlsec1
