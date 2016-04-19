@@ -1,25 +1,46 @@
 # Docker image for pysaml2 SP
 
-To run the Service Provider (SP) run:
+SAML 2.0 SP Docker image using [pysaml2](https://github.com/rohe/pysaml2).
 
-    docker run -p 8088:<port in service_conf.py> -v <host dir>:<data_dir> -e DATA_DIR=<data_dir> pysaml2-sp
+## Run
 
-The volume bound must contain the necessary configuration files:
+Run the Service Provider (SP):
 
-    <host dir>/
-    ├── idp.xml
-    ├── service_conf.py
-    └── sp_conf.py
+    make
 
-where `idp.xml` is the Identity Providers (IdPs) metadata and `service_conf.py` and `sp_conf.py` are the the configuration files
-for the pysaml2 SP, see the [example configurations](https://github.com/rohe/pysaml2/tree/f8cea469d70255adae71e81c19b71efc928d1445/example/sp-wsgi) in the pysaml2 project.
+It should be reachable at [https://localhost:8088](https://localhost:8088).
 
-**Metadata for the SP will be written to the mounted host directory as specified by the environment variable: `DATA_DIR`.**
+## Configure
 
-## Even simpler
+Configuration files are found in:
+- [service_conf.py](conf/service_conf.py) - web service configuration
+- [sp_conf.py](conf/sp_conf.py) - pysaml2 configuration
+- [idp.xml](conf/idp.xml) - IdP metadata
 
-Only add the IdPs metadata in [env/idp.xml](env/idp.xml), then:
+TLS/SSL and assertion signing is enabled by default (using the same cert).
 
-    cd vagrant && vagrant up
+See example configurations [here](https://github.com/rohe/pysaml2/tree/master/example/sp-wsgi).
 
-The SP should be reachable at [http://localhost:8088](http://localhost:8088).
+## Keys
+
+Sample keys are found in:
+- [sp.crt](pki/sp.crt) - Public, self-signed cert in PEM format.
+- [sp.key](pki/sp.key) - Private RSA key for the cert.
+
+Keys are generated with the following commands:
+
+    # Generate cert
+    openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout sp.key -out sp.crt
+    chmod 600 sp.key
+
+    # Check key
+    openssl rsa -in sp.key -check
+
+    # Check cert
+    openssl x509 -in sp.crt -text -noout
+
+    # Convert key & cert to PKCS#12 (used by google chrome import)
+    openssl pkcs12 -export -out sp.pfx -inkey sp.key -in sp.crt
+
+    # check pfx
+    openssl pkcs12 -info -in sp.pfx
