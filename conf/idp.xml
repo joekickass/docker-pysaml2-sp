@@ -3,11 +3,11 @@
                       xmlns:ns1="http://www.w3.org/2000/09/xmldsig#"
                       entityID="https://localhost/idp.xml">
 
-    <ns0:IDPSSODescriptor WantAuthnRequestsSigned="false"
+    <ns0:IDPSSODescriptor WantAuthnRequestsSigned="true"
                           protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 
-        <ns0:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                                 Location="https://localhost/sso/redirect"/>
+        <ns0:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                                 Location="https://localhost/sso/post"/>
 
         <ns0:KeyDescriptor>
             <ns1:KeyInfo>

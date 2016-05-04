@@ -22,7 +22,7 @@ CONFIG = {
                     ("%s/acs/post" % BASE, BINDING_HTTP_POST)
                 ],
             },
-            "authn_requests_signed": False,
+            "authn_requests_signed": True,
             "want_assertions_signed": True
         },
     },
