@@ -21,8 +21,14 @@ CONFIG = {
                 "assertion_consumer_service": [
                     ("%s/acs/post" % BASE, BINDING_HTTP_POST)
                 ],
+                "single_logout_service": [
+                    ("%s/slo/redirect" % BASE, BINDING_HTTP_POST),
+                    ("%s/slo/post" % BASE, BINDING_HTTP_POST)
+                ]
+
             },
             "authn_requests_signed": True,
+            "logout_requests_signed": True,
             "want_assertions_signed": True
         },
     },
